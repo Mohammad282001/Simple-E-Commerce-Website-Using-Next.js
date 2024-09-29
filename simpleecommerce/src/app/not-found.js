@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { notFound } from "next/navigation"
 
 const Custom404 = () => {
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
             <h1 className="text-5xl font-extrabold text-blue-500">404 - Page Not Found</h1>
