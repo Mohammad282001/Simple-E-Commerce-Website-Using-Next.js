@@ -1,49 +1,31 @@
-'use client'
+//  app/products/page.jsx
 
 import axios from "axios";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Products() {
-    const [products, setProducts] = useState([]);
-
-    async function getData() {
-        try {
-            axios.get("https://fakestoreapi.com/products")
-                .then((response) => {
-                    setProducts(response.data);
-                });
-        } catch (error) {
-            console.error("Error fetching products:", error);
-        }
+export default async function Products() {
+    const productsAxios = await axios.get("https://fakestoreapi.com/products", {
+        next: { revalidate: 60 },
     }
-
-    useEffect(() => {
-        getData();
-    }, []);
-
+    );
+    const products = productsAxios.data;
     return (
         <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
             <h1 className="font-extrabold text-4xl sm:text-5xl mb-8 text-center">
                 Explore Our Products
             </h1>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 justify-items-center">
                 {products.length > 0 ? (
                     products.map((product) => (
                         <div key={product.id} className="w-full sm:w-80 bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
                             <div className="h-64">
-                                {/* <Image
+                                <Image
+                                    className="h-full w-full object-cover"
                                     src={product.image}
                                     width={500}
                                     height={500}
                                     alt={product.title}
-                                /> */}
-                                <img
-                                    src={product.image}
-                                    alt={product.title}
-                                    className="h-full w-full object-cover"
                                 />
                             </div>
                             <div className="p-4 text-white">

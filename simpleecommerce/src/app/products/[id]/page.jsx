@@ -1,28 +1,17 @@
-'use client';
-
-import { useEffect, useState } from "react";
 import axios from "axios";
+import Button from "./button";
 
-export default function ProductPage({ params }) {
+export default async function ProductPage({ params }) {
     const { id } = params;
 
-    const [product, setProduct] = useState(null);
+    // Fetch the product data from the API
+    const { data: product } = await axios.get(`https://fakestoreapi.com/products/${id}`, {
+        next: { revalidate: 60, tags: ['collection'] },
+    });
 
-    async function getData() {
-        try {
-            const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
-            setProduct(response.data);
-        } catch (error) {
-            console.error("Error fetching product:", error);
-        }
-    }
-
-    useEffect(() => {
-        getData();
-    }, []);
-
+    // Handle loading state
     if (!product) {
-        return <p className="text-white text-center">Loading...</p>; 
+        return <p className="text-white text-center">Loading...</p>;
     }
 
     return (
@@ -39,12 +28,10 @@ export default function ProductPage({ params }) {
                     <h1 className="text-3xl font-bold">{product.title}</h1>
                     <p className="text-lg text-gray-300">{product.description}</p>
                     <p className="text-xl font-semibold text-blue-400">Category: {product.category}</p>
-                    <p className="text-3xl font-bold text-blue-500">
-                        ${product.price}
-                    </p>
-                    <button className="w-full py-3 bg-blue-600 text-white text-lg rounded-lg shadow-md transition-transform transform hover:scale-105 focus:outline-none focus:scale-105">
-                        Add to Cart
-                    </button>
+                    <p className="text-3xl font-bold text-blue-500">${product.price}</p>
+
+                    {/* Pass the product object to the Button component */}
+                    <Button product={product} />
                 </div>
             </div>
         </div>
