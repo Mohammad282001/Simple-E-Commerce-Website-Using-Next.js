@@ -6,7 +6,7 @@ export default async function ProductPage({ params }) {
 
     // Fetch the product data from the API
     const { data: product } = await axios.get(`https://fakestoreapi.com/products/${id}`, {
-        next: { revalidate: 60, tags: ['collection'] },
+        next: { revalidate: 60 },
     });
 
     // Handle loading state

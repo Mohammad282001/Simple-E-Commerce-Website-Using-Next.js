@@ -12,6 +12,16 @@ export default function Header() {
                 <Link href="/cart">
                     <h1 >Cart</h1>
                 </Link>
+                <Link href="/mongoProducts">
+                    <h1 >Mongo Products</h1>
+                </Link>
+
+                <Link href="/login">
+                    <h1 >Login</h1>
+                </Link>
+                <Link href="/signup">
+                    <h1 >Sign up</h1>
+                </Link>
             </nav>
         </header>
     )

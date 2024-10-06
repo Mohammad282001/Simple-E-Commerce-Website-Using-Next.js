@@ -1,7 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import UsersList from "./users/Users";
+import axios from 'axios';
 
-export default function Home() {
+
+export default async function Home() {
+
+  let users = [];
+  try {
+    const response = await axios.get(`http://localhost:3001/api/MongoUsers`);
+    users = response.data;
+  } catch (error) {
+    console.error('Failed to fetch users:', error);
+  }
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -22,7 +34,27 @@ export default function Home() {
               About Us
             </button>
           </Link>
+
+
+
+          
         </div>
+        <UsersList></UsersList>
+
+
+          <div>
+            <h1>User List</h1>
+            <ul>
+              {users.length > 0 ? (
+                users.map(user => (
+                  <li key={user._id}>{user.name} - {user.email}</li>
+                ))
+              ) : (
+                <li>No users found.</li>
+              )}
+            </ul>
+          </div>
+
       </main>
     </div>
   );
