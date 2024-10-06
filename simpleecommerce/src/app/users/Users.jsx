@@ -3,16 +3,17 @@ import axios from "axios";
 import Link from "next/link";
 import AddUserForm from "../components/AddUserForm";
 
-async function fetchUsers() {
+// async function fetchUsers() {
 
-    const revalidate = 1;
-    const getUsers = await axios.get("http://localhost:3001/api", {
-    });
-    return getUsers.data;
-}
+//     const revalidate = 1;
+//     const getUsers = await axios.get("http://localhost:3001/api", {
+//     });
+//     return getUsers.data;
+// }
 
+const users = [{ } , "ahmad"]
 export default async function UsersList() {
-    const users = await fetchUsers();
+    // const users = await fetchUsers();
 
     return (
         <div className="min-h-screen py-10">
