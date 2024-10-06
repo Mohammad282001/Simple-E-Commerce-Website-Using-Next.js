@@ -8,7 +8,7 @@ export default async function Home() {
 
   let users = [];
   try {
-    const response = await axios.get(`http://localhost:3001/api/MongoUsers`);
+    const response = await axios.get(`api/MongoUsers`);
     users = response.data;
   } catch (error) {
     console.error('Failed to fetch users:', error);
